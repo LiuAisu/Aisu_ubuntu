@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ajax请求示例</title>
+    <script src="/static/js/jquery-1.8.3.min.js"></script>
+    <script>
+    //ajax:异步的javascripts 在不重新加载页面的情况下  对页面进行局部刷新
+        //页面加载完成后执行的方法是$(function()）
+        $(function(){
+            alert(1)
+            // 在这个方法内 绑定btnAjax的click事件
+            // 点击时才执行click内的方法
+            $('#btnAjax').click(function (){
+                alert(2)
+                $.ajax({
+                    //ajax请求中请求的url
+                    'url':'/ajax_handle/',
+                    'type':'get',
+                    'dataType':'json',
+                    //'async': false,   //默认发起的是异步请求 'async': false 时请求为同步的
+                    //服务器返回json数据时 success内的回调函数就会被调用
+                }).success(function (data){
+                    alert(3)
+                    //alert(data.res)
+                    if (data.res == 1){
+                    $('#message').show().html('提示信息')
+                    }
+                })
+                alert(4)
+            })
+        })
+    </script>
+    <style>
+        #message {
+            display:none;
+            color:red;
+        }
+    </style>
+</head>
+<body>
+<input type="button" id="btnAjax"  value="ajax请求">
+<div id="message"></div>
+</body>
+</html>

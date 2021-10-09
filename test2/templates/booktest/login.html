@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录页面</title>
+    <script src="/static/js/jquery-1.8.3.min.js"></script>
+    <script></script>
+</head>
+<body>
+<!--POST:提交的参数在请求头中
+GET:提交的参数在url中
+数据安全性较高时  使用POST方式
+-->
+<form method="post" action="/login_cheak/" >
+    {% csrf_token %}
+    用户名：<input type="text" name="username" value="{{ username }}"><br/>
+    密码：<input type="text" name="password"><br/>
+    <input type="checkbox" name="remember" checked>记住用户名<br/>
+    <input type="checkbox" name="login" checked>记住登录状态<br/>
+    <image src="/verify_code"></image></br>
+    <input type="text" name="vcode">请输入验证码！</br>
+    <input type="submit" value="登录">
+</form>
+</body>
+</html>

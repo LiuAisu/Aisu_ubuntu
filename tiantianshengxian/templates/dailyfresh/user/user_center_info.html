@@ -1,0 +1,87 @@
+{% extends 'dailyfresh/basehtml/base_user_center.html' %}
+{% block right_content %}
+    <div class="right_content clearfix">
+				<div class="info_con clearfix">
+				<h3 class="common_title2">基本信息</h3>
+						<ul class="user_info_list">
+							<li><span>用户名：</span>{{ user.username }}</li>
+                            {% if address %}
+                                <li><span>联系方式：</span>{{ address.phone }}</li>
+                                <li><span>联系地址：</span>{{ address.addr }}</li>
+                            {% else %}
+                                <li><span>联系方式：</span>无默认</li>
+                                <li><span>联系地址：</span>无默认</li>
+                            {% endif %}
+						</ul>
+				</div>
+				<h3 class="common_title2">最近浏览</h3>
+				<div class="has_view_list">
+					<ul class="goods_type_list clearfix">
+                    {% csrf_token %}
+                    {% for good in goods_li %}
+                            <li>
+                                <a href="{% url 'goods:detail' good.id %}"><img src="{{ good.image.url }}"></a>
+                                <h4><a href="{% url 'goods:detail' good.id %}">{{ good.name }}</a></h4>
+                                <div class="operate">
+                                    <span class="prize">{{ good.price }}</span>
+                                    <span class="unit">{{ good.price }}/{{ good.unite }}</span>
+                                    <a href="javascript:;" class="add_goods" sku_id="{{ good.id }}" title="加入购物车"></a>
+                                </div>
+                            </li>
+                        {% empty %}
+                            无历史浏览记录
+                    {% endfor %}
+			</ul>
+		</div>
+		</div>
+{% endblock right_content %}
+{% block bottomfiles %}
+    <script type="text/javascript" src="/static/dailyfresh/js/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript">
+            $('.add_goods').click(function(){
+            // 获取商品id 和商品数量
+                sku_id = $(this).attr('sku_id')
+                count = 1
+                // 还要获取csrf_token值
+                csrf = $('input[name="csrfmiddlewaretoken"]').val()
+                // 组织参数
+                params = {'sku_id': sku_id, 'count': count, 'csrfmiddlewaretoken': csrf}
+                // 发起ajax post 请求  访问的时/cart/add  传递参数: sku_id  count
+                $.ajax({'url': '/cart/add/',
+                        'type':'post',
+                        'data': params,
+                        'dataType':'json',
+                }).success(function (data){
+                    if (data.res == 5){
+                        // 添加成功
+                        alert(data.errmsg)
+                    }
+                    else{
+                        //添加失败
+                        alert(data.errmsg)
+                    }
+                })
+               /* $.post('/cart/add/', params, function (data){
+                    if (data.res == 5){
+                        // 添加成功
+                        $(".add_jump").css({'left':$add_y+80,'top':$add_x+10,'display':'block'})
+                        $(".add_jump").stop().animate({
+                                'left': $to_y+7,
+                                'top': $to_x+7},
+                                "fast", function() {
+                                    $(".add_jump").fadeOut('fast',function(){
+                                        $('#show_count').html(2);
+                                    });
+                            });
+                    }
+                    else{
+                        //添加失败
+                        alert(data.errmsg)
+                    }
+                })*/
+		})
+
+
+    </script>
+{% endblock bottomfiles %}
+

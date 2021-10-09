@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>url反向解析</title>
+</head>
+<body>
+<a href="/index">首页</a></br>
+url反向解析生成index链接：</br>
+<a href="{% url 'booktest:index' %}">首页</a></br>
+shou_wargs:</br>
+<a href="/show_wargs/1/2/">show_wargs/1/2</a></br>
+动态产生wargs参数:</br>
+<a href="{% url 'booktest:show_wargs' 1 2 %}">show_warge/1/2</a></br>
+shou_kwargs:</br>
+<a href="/show_kwargs/3/4/">show_kwargs/3/4</a></br>
+动态产生kwargs参数:</br>
+<a href="{% url 'booktest:show_kwargs' c=3 d=4 %}">show_kwargs/3/4</a></br>
+</body>
+</html>

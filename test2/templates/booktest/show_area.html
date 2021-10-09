@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>分页显示地区</title>
+</head>
+<body>
+<ul>
+    {% for area in pager %}
+    <li>{{ area.atitle }}</li>
+    {% endfor %}
+</ul>
+{% if pager.has_previous %}
+    <a href="/show_area{{ pager.previous_page_number }}/">&lt;上一页</a>
+{% endif %}
+{% for pindex in pager.paginator.page_range %}
+    {% if pindex == pager.number %}
+        {{pindex}}
+    {% else %}
+        <a href="/show_area{{ pindex }}/">{{ pindex }}</a>
+    {% endif %}
+{% endfor %}
+{% if pager.has_next %}
+    <a href="/show_area{{ pager.next_page_number }}/">下一页&gt;</a>
+{% endif %}
+</body>
+</html>

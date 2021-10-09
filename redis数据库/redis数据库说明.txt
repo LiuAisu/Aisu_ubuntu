@@ -1,0 +1,8 @@
+ 1. mysql  oracle sql server 都是关系型数据库  有通用的sql语句
+ nosql 的种类有 mongodb ,redis, hbase hadoop, cassandra hadoop ,这几种
+ 2. redis  （又叫 no sql） 是非关系型数据库 没有通用的语言（sql语句）每种都有自己的api和语法
+ 存储数据的格式都是采用key和value形式
+ sql适用于关系特别复杂的查询场景  nosql反之
+ 事务特性支持 sql对事务的支持非常完善 nosql对事务基本不支持
+速度高 支持多种数据类型
+redis 的数据是放在内存中的 可以用来作缓存 把常用数据放在缓存 提高效率

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>省市县选择案例</title>
+    <script src="/static/js/jquery-1.8.3.min.js"></script>
+    <script>
+        $(function () {
+            //发起ajax请求 /prov 获取所有省级地区的信息
+            //ajax获取信息就使用get 涉及信息修改使用post
+            //这个get函数就是帮忙发起一个ajax的get请求
+            //还有一个post函数 第二个参数为字典 代表发送的参数 第三个参数才是回调
+            $.get('/prov/', function (data){
+                //回调函数
+                //接收返回的json数据   res是个二维数组
+                res = data.data
+                //获取prov下拉列表框
+                prov = $('#prov')
+                // 遍历res数组 获取每一个元素 ：[地区id,地区atitle]
+                /*
+                for(i=0; i<res.length; i++){
+                    area_id = res[i][0]
+                    area_atitle = res[i][1]
+                    option_str = '<option value="'+ area_id +'">'+ area_atitle + '</option>'
+                    //向prov下拉列表框追加元素
+                    prov.append(option_str)
+                }*/
+                //这是循环的另外一种写法  参数index是 元素下标  item是每一个元素
+                $.each(res, function (index, item){
+                    area_id = item[0]
+                    area_atitle = item[1]
+                    option_str = '<option value="'+ area_id +'">'+ area_atitle + '</option>'
+                    //向prov列表框追加元素
+                    prov.append(option_str)
+                })
+                //需要绑定下拉列表框的change事件 当选项发生改变获取省下面市的信息
+                city = $('#city')
+                prov.change(function () {
+                    //在改变事件  发起ajax请求 /city 获取所有省级地区下市级地区的信息
+                    //请求时带着对应省的id  表明要获取那个省下的地区
+                    // $(this)表示点击的选项
+                    // .val() 表示获取值     $(this).val()即获取点击选项的值
+                    prov_id = $(this).val()
+                    //在每次选择后先清空下拉框 再进行追加
+                    city.empty().append('<option>---请选择市---</option>')
+                    //传递参数的方式 $.get('/city?prov_id='+prov_id, function(){})
+                    $.get('/city'+prov_id+'/', function (data1){
+                        //处理回调函数
+                        res1 = data1.data
+                        $.each(res1, function (index, item){
+                            area_id1 = item[0]
+                            area_atitle1 = item[1]
+                            option_str1 = '<option value="'+ area_id1 +'">'+ area_atitle1 + '</option>'
+                            //向prov列表框追加元素
+                            city.append(option_str1)
+                })
+                    })
+                })
+                city.change(function () {
+                    //在改变事件  发起ajax请求 /city 获取所有省级地区下市级地区的信息
+                    //请求时带着对应省的id  表明要获取那个省下的地区
+                    // $(this)表示点击的选项
+                    // .val() 表示获取值     $(this).val()即获取点击选项的值
+                    city_id = $(this).val()
+                    //在每次选择后先清空下拉框 再进行追加
+                    dis = $('#dis')
+                    dis.empty().append('<option>---请选择县---</option>')
+                    //传递参数的方式 $.get('/city?prov_id='+prov_id, function(){})
+                    $.get('/dis'+city_id+'/', function (data2){
+                        //处理回调函数
+                        res2 = data2.data
+                        $.each(res2, function (index, item){
+                            area_id2 = item[0]
+                            area_atitle2 = item[1]
+                            option_str2 = '<option value="'+ area_id2 +'">'+ area_atitle2 + '</option>'
+                            //向prov列表框追加元素
+                            dis.append(option_str2)
+                })
+                    })
+                })
+            })
+        })
+    </script>
+</head>
+<body>
+<select id="prov">
+  <option>---请选择省---</option>
+</select>
+<select id="city">
+  <option>---请选择市---</option>
+</select>
+<select id="dis">
+  <option>---请选择县---</option>
+</select>
+</body>
+</html>

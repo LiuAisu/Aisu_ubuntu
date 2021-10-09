@@ -1,0 +1,9 @@
+{% extends 'booktest/tem_base.html' %}
+{% block b1 %}
+{{ block.super }}
+<h1>这是子模版b1重写父模版内容</h1>
+{% endblock b1 %}
+
+{% block b2 %}
+<h1>这是子模版b2重写父模版内容</h1>
+{% endblock b2 %}

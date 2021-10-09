@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户上传图片</title>
+</head>
+<body>
+<form method="post" enctype="multipart/form-data" action="/upload_action/">
+    <!--post表提交加{% csrf_token %}-->
+    {% csrf_token %}
+    <input type="file" name="pic"><br/>
+    <input type="submit" value="上传">
+</form>
+</body>
+</html>
